@@ -59,44 +59,63 @@
   -->
   <div class="inbox">
     <div class="item">
-      <input type="checkbox">
+      <input type="checkbox" id="0">
       <p>This is an inbox layout.</p>
     </div>
     <div class="item">
-      <input type="checkbox">
+      <input type="checkbox" id="1">
       <p>Check one item</p>
     </div>
     <div class="item">
-      <input type="checkbox">
+      <input type="checkbox" id="2">
       <p>Hold down your Shift key</p>
     </div>
     <div class="item">
-      <input type="checkbox">
+      <input type="checkbox" id="3">
       <p>Check a lower item</p>
     </div>
     <div class="item">
-      <input type="checkbox">
+      <input type="checkbox" id="4">
       <p>Everything in between should also be set to checked</p>
     </div>
     <div class="item">
-      <input type="checkbox">
+      <input type="checkbox" id="5">
       <p>Try to do it without any libraries</p>
     </div>
     <div class="item">
-      <input type="checkbox">
+      <input type="checkbox" id="6">
       <p>Just regular JavaScript</p>
     </div>
     <div class="item">
-      <input type="checkbox">
+      <input type="checkbox" id="7">
       <p>Good Luck!</p>
     </div>
     <div class="item">
-      <input type="checkbox">
+      <input type="checkbox" id="8">
       <p>Don't forget to tweet your result!</p>
     </div>
   </div>
 
 <script>
+  const checkboxes = document.querySelectorAll(".inbox [type='checkbox']")
+  let last_selected
+
+  function multiChecker(e) {
+    if (last_selected && e.shiftKey) {
+      let start_idx, end_idx
+  
+      this.checked = last_selected.checked
+      this.id > last_selected.id ? [start_idx, end_idx] = [last_selected.id, this.id] : [start_idx, end_idx] = [this.id, last_selected.id]
+
+      const middle_boxes = Array.from(checkboxes).slice(parseInt(start_idx) + 1, end_idx)
+
+      middle_boxes.forEach((boxes) => boxes.checked = this.checked)
+    }
+
+    last_selected = this
+  }
+
+  checkboxes.forEach((checkbox) => checkbox.addEventListener("click", multiChecker))
 </script>
 </body>
 </html>
